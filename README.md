@@ -7,6 +7,6 @@ Puppeteer presentation
 
 
 ## Step by step
-1. npm init
-2. npm install puppeteer
+1. npm install
+2. node index.js
 
