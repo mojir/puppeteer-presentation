@@ -4,7 +4,8 @@
   "description": "A puppeteer demo",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm `find . -name \"*.png\" -not -path \"*node_modules*\"`",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -12,11 +13,8 @@
   },
   "author": "Albert Mojir",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mojir/puppeteer-presentation/issues"
-  },
-  "homepage": "https://github.com/mojir/puppeteer-presentation#readme",
   "dependencies": {
+    "jest": "^23.0.1",
     "puppeteer": "^1.4.0"
   }
 }
