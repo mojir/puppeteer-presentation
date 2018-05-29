@@ -1,12 +1,11 @@
 const puppeteer = require('puppeteer')
 
-const WIDTH = 1600
-const HEIGHT = 1200
-
 async function cgiSearch() {
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({
+    headless: false,
+    slowMo: 200
+  })
   const page = await browser.newPage()
-  await page.setViewport({ width: WIDTH, height: HEIGHT })
 
   await page.goto('https://www.cgi.com/en')
 
@@ -25,9 +24,23 @@ async function cgiSearch() {
 
   // Let's make sure the 'CAREER' search result is visible
   const searchResultLink = 'div[id="block-system-main"] a'
-  const result = await page.$$eval(searchResultLink, links => {
-    return links.filter(link => link.textContent.match(/CAREER/))[0]
-  })
+
+  // $$eval will do magic stuff
+  const result = await page.$$eval(
+    // The result of this selector will be passed into
+    // the function running in the browser
+    searchResultLink,
+
+    // This function will run in the browser
+    links => {
+      // Find all links that has the word CAREER
+      const linksThatHasCAREER =
+        links.filter(link => link.textContent.match(/CAREER/))
+
+      // Return the first link
+      return linksThatHasCAREER[0]
+    }
+  )
 
   if (!result) {
     throw Error('Did not found expected search result')
